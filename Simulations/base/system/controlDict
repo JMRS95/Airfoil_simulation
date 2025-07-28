@@ -1,0 +1,59 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     simpleFoam; //pimpleFoam;
+
+startFrom       startTime; //latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         500;  // 1000; //10; // SIMPLE / PIMPLE
+deltaT          1; //1e-3
+
+writeControl    adjustable;
+
+writeInterval   500; //10; //0.1; // SIMPLE/PIMPLE
+
+purgeWrite      0;
+
+writeFormat     binary; //binary
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+maxCo           2;
+
+functions
+{
+    #includeFunc vorticity
+    #includeFunc Q
+    #include "forces"
+    #include "forceCoeffs"
+}
+
+
+// ************************************************************************* //

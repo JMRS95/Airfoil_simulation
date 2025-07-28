@@ -1,0 +1,97 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.2                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      extrudeMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// EXTRUCCIÓN DESDE UN PATCH (LA CARA FRONTAL)
+constructFrom patch;
+
+
+// FUENTE: SE COLOCA DIRECTORIO DEL CASO
+sourceCase "/mnt/f/Maestria/Airfoil/Simulations/base";
+
+// PATCH A EXTRUIR
+sourcePatches (front);
+
+exposedPatchName front;
+
+
+// VECTOR NORMAL SE MANTIENE DURANTE EXTRUSIÓN  (IRRELEVANTE 2-D)
+flipNormals false;
+
+// MÉTODO DE EXTRUSIÓN (IRRELEVANTE 2-D)
+extrudeModel        linearNormal;
+
+
+// NUMERO DE CAPAS A EXTRUIR. PARA UNA SIMULACIÓN 2-D SE REQUIERE SOLO UNA
+nLayers             1;
+
+
+
+
+
+// ESTOS PARÁMETROS SOLO SE USAN EN EXTRUSIONES CON MÁS DE UNA CAPA:
+// NO SIRVEN EN NUESTRO CASO.
+expansionRatio      1.0;    //0.9;
+
+wedgeCoeffs
+{
+    axisPt      (0 0.1 -0.05);
+    axis        (-1 0 0);
+    angle       360;  // For nLayers=1 assume symmetry so angle/2 on each side
+}
+
+linearNormalCoeffs
+{
+    thickness       1;
+}
+
+linearDirectionCoeffs
+{
+    direction       (0 0 1);
+    thickness       0.01;
+}
+
+linearRadialCoeffs
+{
+    R               0.1;
+    // Optional inner radius
+    Rsurface        0.01;
+}
+
+radialCoeffs
+{
+    // Radii specified through interpolation table
+    R               table ((0 0.01)(3 0.03)(10 0.1));
+}
+
+
+sigmaRadialCoeffs
+{
+    RTbyg           1;
+    pRef            1;
+    pStrat          1;
+}
+
+// Do front and back need to be merged? Usually only makes sense for 360
+// degree wedges.
+mergeFaces false;   //true;
+
+// Merge small edges. Fraction of bounding box.
+mergeTol 0;
+
+
+
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

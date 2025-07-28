@@ -1,0 +1,14 @@
+[0m[1m[91m
+Loguru caught a signal: SIGINT
+[0m[0m[31mStack trace:
+9       0x55a7ee398dae paraview(+0x8dae) [0x55a7ee398dae]
+8       0x7ff293d53083 __libc_start_main + 243
+7       0x55a7ee398c0a paraview(+0x8c0a) [0x55a7ee398c0a]
+6       0x7ff292b55116 QCoreApplication::exec() + 150
+5       0x7ff292b4d3ab QEventLoop::exec(QFlags<QEventLoop::ProcessEventsFlag>) + 299
+4       0x7ff292ba6435 QEventDispatcherGlib::processEvents(QFlags<QEventLoop::ProcessEventsFlag>) + 101
+3       0x7ff28ebec4a3 g_main_context_iteration + 51
+2       0x7ff28ebec36e /lib/x86_64-linux-gnu/libglib-2.0.so.0(+0x5236e) [0x7ff28ebec36e]
+1       0x7ff293e4199f __poll + 79
+0       0x7ff293d72090 /usr/bin/../lib/x86_64-linux-gnu/libc.so.6(+0x43090) [0x7ff293d72090][0m
+[0m[31m(   9.011s) [paraview        ]                       :0     FATL| Signal: SIGINT[0m
